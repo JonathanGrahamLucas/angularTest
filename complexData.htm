@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+ 
+ <style>
+  .startOver { float:left; color:red; }
+  #page { width:100%; background-color:#eee; padding:4px; border: 1px solid #ccc }  
+  #complexData { width:100%; background-color:#fff; padding:2px; border: 1px solid #ccc }  
+     #dynamicInput { width:1000px; background-color:#fff; padding:10px; border: 1px solid #ccc }                      
+     #colNames { width:400px; min-height:20px; background-color:#fff; margin:0; padding:2px; color:#333; }                 
+     #colNameA { display:inline; float:left; margin:0 0 0 0; background-color:#ddd; width:64px; text-align:center; }
+     #colNameB { display:inline; float:left; margin:0 0 0 5px; background-color:#ddd; width:64px; min-width:64px; text-align:center; }
+     #colNameC { display:inline; float:left; margin:0 0 0 5px; background-color:#ddd; width:64px; text-align:center; }          
+     #colNameD { display:inline; float:left; margin:0 0 0 5px; background-color:#ddd; width:64px; text-align:center; }          
+     .colValueInput { width :60px; } 
+     .exampleCopy { font: 11px Verdana, Helvetica, Arial, sans-serif; }     
+ </style>  
+ 
+ <script type= "text/javascript">
+    
+ var abc   = "abcdefghijklmnopqrstuvwxyz";
+ var abcRequired = "abdefghijklmnopqrstuvwxyz";
+ var elementIdx  = "colValues";
+ var innerHTMLx  = "";
+
+ // divName = "colValues" 
+ 
+ function iniData(complexDataStr){
+
+  document.getElementById(elementIdx).innerHTML = "";
+          
+  var complxDataArray = complexDataStr.split("^");
+  var counter = 0;
+
+  // loop over rows
+  for (var i=0; i < complxDataArray.length; i++){ 
+   
+   counter = i;
+   
+   var childArray     = complxDataArray[i].split("|");
+   var newElement     = document.createElement('div');         
+          newElement.id    = "z" + i; // assign it a new divId
+          newElement.innerHTML  = "";
+          
+          document.getElementById(elementIdx).appendChild(newElement);  
+          
+          // loop over the data in the row
+    for (var ii=0; ii < childArray.length; ii++){
+            
+      var newinput   = document.createElement('input');
+            newinput.type  = "text";
+            newinput.name  = 'input'+ii;
+            newinput.id  = 'input'+ii;
+            newinput.value  = childArray[ii];
+    
+            newElement.appendChild(newinput); 
+        
+        if(ii === childArray.length - 1){
+         
+         var newinput   = document.createElement('input');
+             newinput.type  = "text";
+             newinput.name  = 'input' + ii + 1;
+             newinput.id  = 'input' + ii + 1;
+             newinput.value  = '';
+    
+             newElement.appendChild(newinput); 
+
+        }                                  
+    }    
+  }
+ }
+ 
+ 
+  
+ </script>
+
+</head>
+<body>
+ 
+  <div id="page">
+ 
+  <form action="a1.htm" method="post"> 
+               
+   <div id="dynamicInput">                    
+    <div class="exampleCopy">
+     
+     Example: 1|10|10.99^11|20|8.99^21|30|7.99^31|40|6.99^41|50|3.99^51|60|2.99^61|999999|1.99^<br/>
+     <textarea style="height:16px;width:800px;" id="complexData" name="complexData" cols="10" rows="1">1|10|10.99^11|20|8.99^21|30|7.99^31|40|6.99^41|50|3.99^51|60|2.99^61|999999|1.99^</textarea>
+     <input type="button" value="Test" onclick="iniData(document.all.complexData.value);">
+     
+    </div>
+          <div id="colNames">
+     <div id="colNameA">From</div>
+              <div id="colNameB">To</div>
+              <div id="colNameC">Percent</div>
+     <div id="colNameD">Value</div>                   
+          </div>       
+          <div id="colValues">
+
+    </div>                        
+   </div>          
+     
+   <input type="button" value="Check" onclick="showMeTheForm();return false;">
+   <input type="button" value="Add another text input" onClick="addInput('colValues','0');">
+   <input type="submit" value="Submit">
+         <input type="button" value="Clear" onclick="location.reload(forceGet=true);"> 
+    
+  </form>
+  
+ </div>    
+            
+</body>
+</html>
